@@ -1,0 +1,51 @@
+CREATE DATABASE bookReview;
+USE bookReview;
+CREATE TABLE role(
+	roleID INT PRIMARY KEY AUTO_INCREMENT,
+	powerIDs VARCHAR(20),
+	roleName VARCHAR(20)
+	);
+CREATE TABLE userPower(
+	powerID INT PRIMARY KEY,
+	operation VARCHAR(20)
+	);
+CREATE TABLE userInfo(
+	userID INT PRIMARY KEY AUTO_INCREMENT,
+	userName VARCHAR(20) NOT NULL,
+	sex VARCHAR(10),
+	love VARCHAR(20),
+	PASSWORD VARCHAR(10) NOT NULL,
+	roleId INT,
+	age INT
+	);
+CREATE	TABLE book(
+	bookID INT,
+	bookName VARCHAR(20),
+	summary VARCHAR(100),
+	photo VARCHAR(100),
+	userID INT,
+	PRIMARY KEY(bookID,userID)
+	);
+CREATE	TABLE review(
+	reviewID INT,
+	content VARCHAR(200),
+	bookName VARCHAR(20),
+	userID INT,
+	title VARCHAR(20),
+	PRIMARY KEY(reviewID,userID)
+	);
+INSERT INTO role VALUES('1','1,2,3,4,5','超级管理员');
+INSERT INTO role VALUES('2','1,2,5','管理员');
+INSERT INTO role VALUES('3','1,2','普通用户');
+INSERT INTO userPower VALUES('1','添加');
+INSERT INTO userPower VALUES('2','修改');
+INSERT INTO userPower VALUES('3','升级');
+INSERT INTO userPower VALUES('4','降级');
+INSERT INTO userPower VALUES('5','删除');
+INSERT INTO userInfo VALUES('1','mayan','男','读书，游戏，旅游','mayan0706','1','26');
+
+
+ALTER TABLE review ADD CONSTRAINT user_review FOREIGN KEY(userID)
+REFERENCES userinfo(userID);
+ALTER TABLE book ADD CONSTRAINT user_book FOREIGN KEY(userID)
+REFERENCES userinfo(userID);
